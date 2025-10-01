@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.fizzahmajaz.trading.entity.Order;
+import com.fizzahmajaz.trading.entity.Trade;
 import com.fizzahmajaz.trading.entity.Order.OrderStatus;
 import com.fizzahmajaz.trading.repository.OrderRepository;
 import com.fizzahmajaz.trading.repository.TradeRepository;
@@ -27,7 +28,38 @@ public class MatchingEngineService {
                                                                               
       List<Order> sellOrder = orderRepository.findByStatus(OrderStatus.PENDING).stream()
                                                                                .filter(o->o.getType() == Order.OrderType.BUY)
-                                                                               .toList();                                                                        
+                                                                               .toList();   
+      
+      
+      for(Order buy : buyOrder){
+         for(Order sell : sellOrder){
+            if(buy.getSymbol().equals(sell.getSymbol()) && buy.getPrice() >= sell.getPrice()){
+
+               double tradeQuantity = Math.min(buy.getQuantity(), sell.getQuantity());
+               double tradePrice = sell.getPrice();
+
+               //create Trade
+               Trade trade = new Trade();
+               trade.setBuyOrder(buy);
+               trade.setSellOrder(sell);
+               trade.setSymbol(buy.getSymbol());
+               trade.setPrice(tradePrice);
+               trade.setQuantity(tradeQuantity);
+               tradeRepository.save(trade);
+
+               buy.setQuantity(buy.getQuantity() - tradeQuantity);
+               sell.setQuantity(sell.getQuantity() - tradeQuantity);
+
+               if(buy.getQuantity() == 0) buy.setStatus(OrderStatus.FILLED);
+               if(sell.getQuantity() == 0) sell.setStatus(OrderStatus.FILLED);
+
+               orderRepository.save(buy);
+               orderRepository.save(sell);
+
+               break;
+            }
+         }
+      }                                                                                                                                         
    }
 
 
