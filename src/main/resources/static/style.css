@@ -1,0 +1,112 @@
+/* ===== Body & Layout ===== */
+
+body {
+    font-family: Arial, sans-serif;
+    background: #1b1b2f;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background: #0f1022;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-gap: 20px;
+    padding: 20px;
+}
+
+
+/* ===== Section Styling ===== */
+
+section {
+    background: #2c2c4c;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+
+.component h2 {
+    border-bottom: 1px solid #444;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+
+/* ===== Buttons ===== */
+
+button {
+    background: #00b894;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background: #019875;
+}
+
+
+/* ===== Inputs & Selects ===== */
+
+input,
+select {
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 4px;
+    border: none;
+    width: 100%;
+}
+
+
+/* ===== Tables ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 10px;
+    border-bottom: 1px solid #444;
+}
+
+table th {
+    background: #333;
+}
+
+table tr:hover {
+    background: #3a3a5c;
+}
+
+
+/* ===== Chart Styling ===== */
+
+canvas {
+    background: #1b1b2f;
+    border-radius: 8px;
+    width: 100% !important;
+    height: auto !important;
+}
+
+
+/* ===== Responsive ===== */
+
+@media (max-width: 900px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+}
