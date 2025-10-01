@@ -2,7 +2,6 @@ package com.fizzahmajaz.trading.entity;
 
 import java.time.LocalDateTime;
 
-import org.hibernate.annotations.CollectionId;
 import org.hibernate.annotations.ManyToAny;
 
 import jakarta.persistence.Column;
