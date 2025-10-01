@@ -1,6 +1,6 @@
 # ⚡ Real-Time Stock/Crypto Trading Simulator  
 
-![Trading Animation](https://media.giphy.com/media/QssGEmpkyEOhBCb7e1/giphy.gif)  
+![Trading Animation](https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3ZmbzRpdzJzbGc2Z3Z1NTRrbmRpenE1OHhvOTJ2MG03YzJ2MnprNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/TVbnJd2GvMPHHeSiD7/giphy.gif) 
 
 A **real-time trading simulator** built with **Spring Boot + MySQL + HTML/CSS/JavaScript**.  
 Streams **live Binance prices**, allows **paper trading**, tracks **portfolio & P&L**, and ranks users on a **leaderboard**.  
