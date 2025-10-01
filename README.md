@@ -92,7 +92,7 @@ Open `src/main/resources/static/index.html` in your browser.
 - `GET /users/all` → List all users  
 
 ### Orders  
-- `POST /orders/place` → Place new order  
+- `POST /orders/place/{userid}` → Place new order  
 - `GET /orders/open/{symbol}` → Get open orders for a symbol  
 - `POST /orders/cancel/{id}` → Cancel an order  
 
