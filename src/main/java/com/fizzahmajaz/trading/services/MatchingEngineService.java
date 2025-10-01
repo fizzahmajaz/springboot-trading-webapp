@@ -5,19 +5,51 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.node.POJONode;
 import com.fizzahmajaz.trading.entity.Order;
+import com.fizzahmajaz.trading.entity.Portfolio;
 import com.fizzahmajaz.trading.entity.Trade;
 import com.fizzahmajaz.trading.entity.Order.OrderStatus;
 import com.fizzahmajaz.trading.repository.OrderRepository;
+import com.fizzahmajaz.trading.repository.PortfolioRepository;
 import com.fizzahmajaz.trading.repository.TradeRepository;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 @Service
 public class MatchingEngineService {
 
    public final OrderRepository orderRepository;
    public final TradeRepository tradeRepository;
+   public final PortfolioRepository portfolioRepository;
+
+    private void updatePortfolio(Order order, double tradeQuantity, double tradePrice){
+
+      Portfolio portfolio = portfolioRepository.findByUserAndSymbol(order.getUser(), order.getSymbol());
+
+      if(portfolio == null){
+         portfolio = new Portfolio();
+         portfolio.setUser(order.getUser());
+         portfolio.setSymbol(order.getSymbol());
+         portfolio.setQuantity(0.0);
+         portfolio.setAvgPrice(0.0);
+      }
+      if(order.getType() == Order.OrderType.BUY){
+         double totalCost = portfolio.getAvgPrice() * portfolio.getQuantity() + tradePrice * tradeQuantity;
+         portfolio.setQuantity(portfolio.getQuantity() + tradeQuantity);
+         portfolio.setAvgPrice(totalCost / portfolio.getQuantity());
+
+      }else{ //if its selling
+         portfolio.setQuantity(portfolio.getQuantity() - tradeQuantity);
+
+      }
+
+      portfolioRepository.save(portfolio);
+
+   }
 
    @Transactional
    public void matchOrder(){
@@ -55,12 +87,16 @@ public class MatchingEngineService {
 
                orderRepository.save(buy);
                orderRepository.save(sell);
+               updatePortfolio(buy, tradeQuantity, tradePrice);
+               updatePortfolio(sell, tradeQuantity, tradePrice);
 
                break;
             }
          }
       }                                                                                                                                         
    }
+
+  
 
 
 
