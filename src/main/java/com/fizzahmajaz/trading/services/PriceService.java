@@ -1,12 +1,14 @@
 package com.fizzahmajaz.trading.services;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.fizzahmajaz.trading.entity.Price;
 import com.fizzahmajaz.trading.repository.PriceRepository;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
@@ -19,17 +21,29 @@ public class PriceService {
     private Map<String, Double> symbolPrice = new HashMap<>();
     private Random random = new Random();
 
-    public PriceSimulatorService(PriceRepository priceRepository, WebSocketService webSocketService) {
+    public PriceService(PriceRepository priceRepository, WebSocketService webSocketService) {
         this.priceRepository = priceRepository;
         this.webSocketService = webSocketService;
 
-        symbolPrices.put("BTC", 30000.0);
-        symbolPrices.put("ETH", 2000.0);
+        symbolPrice.put("BTC", 30000.0);
+        symbolPrice.put("ETH", 2000.0);
     }
 
     @Scheduled(fixedRate = 3000) //every 3 seconds
     public void simulatePrice(){
-        symbolPrices.forEach
+        symbolPrice.forEach((symbol, price) -> {double changePercent = (random.nextDouble() - 0.5) *0.02;
+        double newPrice = price + price * changePercent;
+        symbolPrice.put(symbol, newPrice);
+
+        Price priceEntity = new Price();
+        priceEntity.setSymbol(symbol);
+        priceEntity.setPrice(newPrice);
+        priceRepository.save(priceEntity);
+
+        webSocketService.broadcastPrice(symbol, newPrice);
+
+    });
+
     }
 
 

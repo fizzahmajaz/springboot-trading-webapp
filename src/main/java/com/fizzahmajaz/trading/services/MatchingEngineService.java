@@ -1,11 +1,8 @@
 package com.fizzahmajaz.trading.services;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.fasterxml.jackson.databind.node.POJONode;
 import com.fizzahmajaz.trading.entity.Order;
 import com.fizzahmajaz.trading.entity.Portfolio;
 import com.fizzahmajaz.trading.entity.Trade;
@@ -13,7 +10,6 @@ import com.fizzahmajaz.trading.entity.Order.OrderStatus;
 import com.fizzahmajaz.trading.repository.OrderRepository;
 import com.fizzahmajaz.trading.repository.PortfolioRepository;
 import com.fizzahmajaz.trading.repository.TradeRepository;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

@@ -1,15 +1,13 @@
 package com.fizzahmajaz.trading.entity;
 
 import java.time.LocalDateTime;
-
-import org.hibernate.annotations.ManyToAny;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -22,12 +20,12 @@ public class Trade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToAny
-    @JoinColumn(name="buy-order-id")
+    @ManyToOne
+    @JoinColumn(name="buy_order_id")
     private Order buyOrder;
 
-    @ManyToAny
-    @JoinColumn(name="sell-order-id")
+    @ManyToOne
+    @JoinColumn(name="sell_order_id")
     private Order sellOrder;
 
     @Column(nullable = false)
