@@ -1,6 +1,9 @@
 package com.fizzahmajaz.trading.entity;
 
 import java.time.LocalDateTime;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -35,8 +38,9 @@ public class User {
     public String getPassword() {
         return password;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPassword(String password) { //password Encryption
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        this.password = encoder.encode(password);
     }
     public Double getBalance() {
         return balance;
